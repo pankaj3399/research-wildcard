@@ -1,0 +1,35 @@
+.CompletedProjects {
+    margin-top: 20px;
+  }
+  
+  .CompletedProjectItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .CompletedProjectTitle {
+    font-weight: bold;
+  }
+  
+  .CompletedProjectActions {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+  }
+  
+  .ActionIcon {
+    cursor: pointer;
+    margin-left: 16px;
+    color: #333; 
+    transition: color 0.3s; 
+  }
+  
+  .ActionIcon:hover {
+    opacity: 0.7;
+  }

@@ -1,0 +1,96 @@
+.ProjectsSection {
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+  
+  .ProjectsList {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px;
+    margin-top: 20px; 
+    padding: 10px; 
+    background: #f8f8f8;
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    max-width: 600px; 
+    margin-left: auto; 
+    margin-right: auto;
+  }
+  
+  .ProjectWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .ProjectItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    margin-bottom: 10px; 
+    flex-grow: 1;
+    background-color: #fff; 
+    border-radius: 4px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .UserIcon {
+    margin-right: 10px;
+  }
+  
+  .ProjectTitle {
+    font-weight: bold;
+    margin-right: 20px;
+    flex-shrink: 0; 
+  }
+  
+  .ProgressContainer {
+    position: relative;
+    flex-grow: 1;
+    height: 15px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden; /*inner bar does not overflow */
+    margin-right: 10px;
+  }
+  
+  .ProgressBar {
+    position: absolute;
+    height: 100%;
+    background-color: #1d75af;
+    border-radius: 10px 0 0 10px;
+    transition: width 0.3s ease; /* Smooth transition for width change */
+  }
+  
+  .ProjectProgression {
+    color: black;
+    margin-left: 30px; 
+    margin-right: 30px;
+    white-space: nowrap;
+  
+  }
+  
+  .ProgressPercentage {
+    margin-left: 10px;
+    margin-right: 10px; 
+  }
+  
+  .ProjectChartIcon {
+   cursor: pointer;
+   margin-left: 5px;
+   color: black;
+   margin-top: -10px;
+  }
+  
+  .ProjectChartIcon:hover {
+    color: #1d75af; /* Color changes to blue on hover */
+  }
+  
+  .ProjectPushPinIcon {
+    cursor: pointer;
+    margin-left: 5px;
+    color: black;
+    margin-top: -10px;
+  }
