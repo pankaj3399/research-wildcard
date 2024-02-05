@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Steps, Button, Input, Form, Select, message } from 'antd';
+import { Steps, Button, Input, Form, Select, message, Upload } from 'antd';
+import { InboxOutlined } from '@ant-design/icons';
 
 const { Step } = Steps;
 const { Option } = Select;
 const { TextArea } = Input;
+const { Dragger } = Upload;
 
 function ProjectForm() {
     const [projectData, setProjectData] = useState({
         title: '',
         description: '',
-        collaborators: []
-    });
+        collaborators: [],
+        studies: [], // Added to store uploaded studies
+    }); 
     const [employeeOptions, setEmployeeOptions] = useState([]);
     const [currentStep, setCurrentStep] = useState(0);
     const [employeeMap, setEmployeeMap] = useState({});
+    const [uploadingFiles, setUploadingFiles] = useState({});
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    
 
     useEffect(() => {
         const fetchEmployees = async () => {
@@ -42,18 +46,54 @@ function ProjectForm() {
         setProjectData({ ...projectData, [name]: value });
     };
 
-    const filterOptions = (input, option) =>
-    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-
+    const onStudiesUploadChange = async (info) => {
+        let fileList = [...info.fileList].slice(-1); // Focus on the last selected file
     
-
-
-
+        if (fileList.length > 0) {
+            const file = fileList[0].originFileObj;
+            const fileIdentifier = `${file.name}_${file.size}_${file.lastModified}`;
     
+            // Check if the file is already being uploaded
+            if (uploadingFiles[fileIdentifier]) {
+                return; // Exit if this file is currently uploading
+            }
+    
+            // Mark the file as uploading
+            setUploadingFiles(current => ({ ...current, [fileIdentifier]: true }));
+    
+            const formData = new FormData();
+            formData.append("file", file);
+    
+            try {
+                setLoading(true);
+                const response = await axios.post('http://localhost:3000/upload', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
+                message.success('File uploaded successfully');
+                setProjectData(current => ({ ...current, studies: [...current.studies, response.data] }));
+            } catch (error) {
+                console.error('Error uploading file:', error);
+                message.error('Error uploading file');
+            } finally {
+                setLoading(false);
+                // Remove the file from the uploading tracker
+                setUploadingFiles(current => {
+                    const updated = { ...current };
+                    delete updated[fileIdentifier];
+                    return updated;
+                });
+            }
+        }
+    };
 
     const handleSubmit = async () => {
         const token = localStorage.getItem('token'); 
 
+        // Before submitting, you might want to adjust the format of projectData or specifically the studies array as needed by your backend
+        
         try {
             const response = await axios.post('http://localhost:3000/project/create', projectData, {
                 headers: {
@@ -64,7 +104,6 @@ function ProjectForm() {
 
             message.success('Project created successfully');
             navigate('/dashboard');
-            // Additional actions after successful creation (e.g., redirect)
         } catch (error) {
             console.error('Error creating project:', error);
             message.error('Error creating project');
@@ -91,6 +130,23 @@ function ProjectForm() {
             ),
         },
         {
+            title: 'Import Studies',
+            content: (
+                <Form.Item>
+                    <Dragger
+                        name="studies"
+                        multiple={true}
+                        onChange={onStudiesUploadChange}
+                    >
+                        <p className="ant-upload-drag-icon">
+                            <InboxOutlined />
+                        </p>
+                        <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                    </Dragger>
+                </Form.Item>
+            ),
+        },
+        {
             title: 'Collaborators',
             content: (
                 <Form.Item>
@@ -101,7 +157,6 @@ function ProjectForm() {
                         value={projectData.collaborators}
                         onChange={value => handleChange('collaborators', value)}
                         showSearch
-                        filterOption={filterOptions}
                     >
                         {employeeOptions.map(option => (
                             <Option key={option.value} value={option.value}>
@@ -126,11 +181,11 @@ function ProjectForm() {
                             <li key={index}>{employeeMap[collaboratorId]}</li>
                         ))}
                     </ul>
+                    {/* Optionally display uploaded studies information */}
                 </div>
             ),
         },
     ];
-    
 
     return (
         <Form onFinish={handleSubmit} layout="vertical">
@@ -144,11 +199,7 @@ function ProjectForm() {
             </div>
             <div className="steps-action" style={{ marginTop: '24px' }}>
                 {currentStep < steps.length - 1 && (
-                    <Button type="primary" onClick={() => {
-                        console.log(projectData);
-                        console.log(projectData.collaborators);
-                        setCurrentStep(currentStep + 1);
-                    }}>
+                    <Button type="primary" onClick={() => setCurrentStep(currentStep + 1)}>
                         Next
                     </Button>
                 )}

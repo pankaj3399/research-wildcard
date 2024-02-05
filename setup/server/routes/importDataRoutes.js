@@ -1,92 +1,74 @@
 const express = require("express");
 const multer = require("multer");
-const csv = require("fast-csv");
+const csv = require("csv-parser");
 const fs = require("fs");
-const { importJSON, importXML, importFromAPI } = require("../importData");
+const { importCSV, importJSON, importXML, importFromAPI, importPDF } = require("../importData");
+const Study = require('../models/StudySchema');
 
 const router = express.Router();
 const upload = multer({ dest: "data/" });
 
-router.post("/", upload.single("file"), async (req, res) => {
+router.post("/upload", upload.single("file"), (req, res) => {
   const filename = req.file.path;
   const ext = req.file.originalname.split(".").pop();
-  let parsedData;
 
-  // Determine the file format based on the file extension
   switch (ext) {
     case "csv":
-      const fileRows = [];
-      // Open uploaded file
-      csv
-        .parseFile(filename)
-        .on("data", function (data) {
-          fileRows.push(data); // Push each row
-        })
-        .on("end", function () {
-          console.log(fileRows);
-          fs.unlinkSync(filename); // Remove temp file
-          // Process "fileRows" and respond
-          parsedData = fileRows;
-        });
+      importCSV(filename) // Use the importCSV function from importData.js
+        .then(data => createAndSaveStudy(data, res))
+        .catch(error => res.status(500).json({ error: "Failed to parse CSV" }));
       break;
     case "xml":
-      try {
-        parsedData = await importXML(filename);
-      } catch (error) {
-        res.status(500).json({ error: "Failed to parse XML" });
-        return;
-      }
+      importXML(filename)
+        .then(data => createAndSaveStudy(data, res))
+        .catch(error => res.status(500).json({ error: "Failed to parse XML" }));
       break;
     case "json":
-      try {
-        parsedData = await importJSON(filename);
-      } catch (error) {
-        res.status(500).json({ error: "Failed to parse JSON" });
-        return;
-      }
+      importJSON(filename)
+        .then(data => createAndSaveStudy(data, res))
+        .catch(error => res.status(500).json({ error: "Failed to parse JSON" }));
+      break;
+    case "pdf":
+      importPDF(filename)
+        .then(data => {
+          console.log(data); // Log the data from the PDF
+          createAndSaveStudy(data, res);
+        })
+        .catch(error => res.status(500).json({ error: "Failed to parse PDF" }));
       break;
     default:
       res.status(400).json({ error: "Unsupported file format" });
-      return;
   }
-
-  // Send the parsed data as the response
-  res.json(parsedData);
 });
 
-// If you want 3 routes based on files format
-// router.post("/upload-csv", upload.single("file"), function (req, res) {
-//   const fileRows = [];
+async function createAndSaveStudy(parsedData, res) {
+  // Check if parsedData is an array and handle accordingly
+  if (Array.isArray(parsedData)) {
+    try {
+      for (const data of parsedData) {
+        const study = new Study(data);
+        await study.save();
+      }
+      res.json({ message: 'Studies saved successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Failed to save studies to database" });
+    }
+  } else {
+    // Existing logic for a single study object
+    const study = new Study(parsedData);
+    try {
+      console.log("Parsed data:", parsedData);
+      console.log("Title:", parsedData.title);
+      await study.save();
+      res.json({ id: study._id });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Failed to save study to database" });
+    }
+  }
+}
 
-//   // open uploaded file
-//   csv
-//     .parseFile(req.file.path)
-//     .on("data", function (data) {
-//       fileRows.push(data); // push each row
-//     })
-//     .on("end", function () {
-//       console.log(fileRows);
-//       fs.unlinkSync(req.file.path); // remove temp file
-//     });
-// });
-// router.post("/parseXml", upload.single("file"), async (req, res) => {
-//   const filename = req.file.path;
-//   try {
-//     const parsedData = await importXML(filename);
-//     res.json(parsedData);
-//   } catch (error) {
-//     res.status(500).json({ error: "Failed to parse XML" });
-//   }
-// });
-// router.post("/parseJson", upload.single("file"), async (req, res) => {
-//   const filename = req.file.path;
-//   try {
-//     const parsedData = await importJSON(filename);
-//     res.json(parsedData);
-//   } catch (error) {
-//     res.status(500).json({ error: "Failed to parse JSON" });
-//   }
-// });
 
 router.get("/pubmed/:id", async (req, res) => {
   const pmid = req.params.id;

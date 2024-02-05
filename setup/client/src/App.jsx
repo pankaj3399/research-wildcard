@@ -9,7 +9,6 @@ import OneProject from "./Pages/Projects/OneProject";
 import Footer from "./Components/Footer";
 import PDFViewer from "./Pages/Projects/PDFViewer";
 import Export from "./Pages/Export/Export";
-import { ParseDataPage } from "./Pages/ParseData";
 
 function App() {
   return (
@@ -19,8 +18,7 @@ function App() {
           <Routes>
             <Route path="/register" element={<Signup />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/parse" element={<ParseDataPage />} />
-            <Route
+            <Route 
               path="/dashboard"
               element={
                 <>

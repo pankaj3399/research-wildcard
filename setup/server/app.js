@@ -52,7 +52,7 @@ app.use(async (req, res, next) => {
 //routes
 app.use("/auth", authRoutes);
 app.use("/project", projectRoutes);
-app.use("/parse", importDataRoutes);
+app.use("/", importDataRoutes);
 
 //port
 const port = process.env.PORT || 3000;
