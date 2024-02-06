@@ -1,10 +1,12 @@
 const UserRole = require('../models/UserRole');
 const User = require("../models/User");
-
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 exports.createUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
-        const hashedPassword = await bcrypt.hash(password, 8); // Hash the password
+        
+        const hashedPassword = bcrypt.hashSync(password, 10); // Hash the password
 
         const newUser = new User({
             name,
@@ -15,7 +17,7 @@ exports.createUser = async (req, res) => {
         await newUser.save();
         res.status(201).json({ message: "User created successfully", user: newUser });
     } catch (error) {
-        console.error(err);
+        console.error(error);
         res.status(500).json({ message: "Failed to create user", error });
     }
 };
@@ -71,3 +73,28 @@ exports.assignRole = async (req, res) => {
         res.status(500).json({ message: "Failed to assign role", error });
     }
 }
+
+exports.loginUser = async (req, res, next) => {
+    const { email, password } = req.body;
+  
+    // Input validation
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Both email and password are required' });
+    }
+  
+    // Find user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ error: 'Invalid email or password' });
+    }
+  
+    // Compare passwords
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+      return res.status(400).json({ error: 'Invalid email or password' });
+    }
+  
+    // Create and assign token
+    const token = jwt.sign({ _id: user._id}, process.env.TOKEN_SECRET);
+    res.header('token', token).json({ message: 'Logged in successfully', token });
+  };

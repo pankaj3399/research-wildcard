@@ -1,30 +1,31 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from 'react';
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
-function Login() {
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(''); 
         try {
-           
-            const response = await axios.post('http://localhost:3000/api/users', { email, password });
-            console.log(response.data);
-            
-            localStorage.setItem('userToken', response.data.token);
-            navigate('/dashboard'); 
-        } catch (err) {
-            console.error(err);
-            if (err.response && err.response.data) {
-                setError(err.response.data.message); 
+            const result = await axios.post('http://localhost:3000/api/users/login', { email, password });
+            console.log(result);
+            if (result.data.message === "Logged in successfully") {
+                // Save the token to localStorage
+                localStorage.setItem('token', result.data.token);
+                // Navigate to the home page
+                navigate('/dashboard');
             } else {
-                setError('Something went wrong. Please try again later.');
+                setError(result.data.error);
             }
+        } catch (err) {
+            console.log(err);
+            setError(err.response?.data?.error);
         }
     };
 
@@ -39,25 +40,27 @@ function Login() {
                 )}
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <label htmlFor="email"><strong>Email</strong></label>
+                        <label htmlFor="email">
+                            <strong>Email</strong>
+                        </label>
                         <input
                             type="email"
                             placeholder="Enter Email"
                             autoComplete="off"
                             name="email"
                             className="form-control rounded-0"
-                            value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="password"><strong>Password</strong></label>
+                        <label htmlFor="password">
+                            <strong>Password</strong>
+                        </label>
                         <input
                             type="password"
                             placeholder="Enter Password"
                             name="password"
                             className="form-control rounded-0"
-                            value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>

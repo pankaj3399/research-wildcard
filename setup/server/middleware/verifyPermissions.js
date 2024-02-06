@@ -3,7 +3,8 @@ const Permission = require('../models/Permission');
 const actions = require('../utils/actions');
 
 const verifyPermission = (requiredAction) => async (req, res, next) => {
-    try {
+    next();
+    /*try {
         const userId = req.user._id;
         const projectId = req.params.projectId;
 
@@ -29,5 +30,7 @@ const verifyPermission = (requiredAction) => async (req, res, next) => {
         res.status(500).json({ message: "Failed to verify permissions", error });
     }
 };
+*/
+}
 
 module.exports = verifyPermission;
