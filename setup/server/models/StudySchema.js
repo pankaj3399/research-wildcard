@@ -18,7 +18,7 @@ const studySchema = new mongoose.Schema({
   reasonsForExclusion: [String],
   pubmedId: {
     type: String,
-    unique: true,
+    unique: false,
     sparse: true
   },
   // Client note* Add other fields for study here as required
