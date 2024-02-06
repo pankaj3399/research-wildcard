@@ -1,28 +1,46 @@
 const express = require('express');
 const router = express.Router();
 const projectController = require('../controllers/projectController');
-const Project = require('../models/ProjectSchema');
+const multer = require('multer');
+const verifyPermission = require('../middleware/verifyPermissions');
+const actions = require('../utils/actions');
 
-router.get('/employees', projectController.getEmployees);
-router.post('/create', projectController.createProject);
+const fileFilter = (req, file, cb) => {
+    const allowedTypes = /pdf|xml/;
+    const isAccepted = allowedTypes.test(file.mimetype) && allowedTypes.test(file.originalname.toLowerCase());
 
-router.get('/', async (req, res) => {
-    if (!req.user) {
-      return res.status(401).send('Access denied. No token provided.');
+    if (isAccepted) {
+        return cb(null, true);
+    } else {
+        return cb(new Error('Only PDF and XML files are allowed'), false);
     }
-  
-    try {
-      const userId = req.user._id;
-      const projects = await Project.find({
-        $or: [
-          { owner: userId },
-          { collaborators: { $in: [userId] } }
-        ]
-      });
-      res.json({ projects });
-    } catch (err) {
-      res.status(500).json({ message: 'Error fetching projects' });
-    }
-  });
+};
+
+const upload = multer({
+    dest: 'uploads/',
+    fileFilter: fileFilter,
+    limits: { fileSize: 10 * 1024 * 1024 } // for 10MB
+});
+
+// Create a new project
+router.post('/projects', verifyPermission(actions.CREATE_PROJECT), projectController.createProject);
+
+// Import articles into a project (handles both PubMed IDs and file uploads)
+router.post('/projects/:projectId/articles', verifyPermission(actions.IMPORT_ARTICLES), upload.array('files'), projectController.importArticles);
+
+// Update an article's review status within a project
+router.put('/projects/:projectId/articles/:articleId/reviewStatus', verifyPermission(actions.UPDATE_ARTICLE_REVIEW_STATUS), projectController.updateArticleReviewStatus);
+
+// Assign an article to a reviewer within a project
+router.post('/projects/:projectId/articles/:articleId/reviewAssignments', verifyPermission(actions.ASSIGN_ARTICLE_TO_REVIEWER), projectController.assignArticleToReviewer);
+
+// Update the status of a review stage within a project
+router.put('/projects/:projectId/reviewStages', verifyPermission(actions.UPDATE_REVIEW_STAGE_STATUS), projectController.updateReviewStageStatus);
+
+// Add a collaborator to a project
+router.post('/projects/:projectId/collaborators', verifyPermission(actions.ADD_COLLABORATOR), projectController.addCollaborator);
+
+// Delete a project
+router.delete('/projects/:projectId', verifyPermission(actions.DELETE_PROJECT), projectController.deleteProject);
 
 module.exports = router;
