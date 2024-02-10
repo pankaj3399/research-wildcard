@@ -19,7 +19,7 @@ const PDFViewer = () => {
     <><div style={{ width: 'calc(100% - 300px)', height: '100%', overflow: 'auto', fontWeight:'300' , marginLeft:'300px', marginTop:'30px', fontSize:'30pt', display:'flex'}}>
       Extraction
       <div style={{ marginRight:'20px', height:'100%'}}>
-      <Button component={Link} to="/dashboard" variant="contained" startIcon={<UndoIcon />}>Back</Button>
+      <Button component={Link} to="/oneproject/:projectId" variant="contained" startIcon={<UndoIcon />}>Back</Button>
       </div>
       
     </div><div style={{ display: 'flex', height: '100vh', marginTop: '30px', marginLeft: '250px' }}>

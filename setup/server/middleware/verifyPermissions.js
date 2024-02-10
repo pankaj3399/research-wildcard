@@ -28,9 +28,7 @@ const verifyPermission = (requiredAction) => async (req, res, next) => {
         next();
     } catch (error) {
         res.status(500).json({ message: "Failed to verify permissions", error });
-    }
+    }*/
 };
-*/
-}
 
 module.exports = verifyPermission;

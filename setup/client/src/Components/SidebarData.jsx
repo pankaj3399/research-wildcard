@@ -1,8 +1,8 @@
 import React from "react";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import SettingsIcon from '@mui/icons-material/Settings';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export const SidebarData = [
   {
@@ -16,9 +16,9 @@ export const SidebarData = [
     link: "/prisma",
   },
   {
-    title: "Export",
-    icon: <FileDownloadIcon />,
-    link: "/export",
+    title: "Profile", 
+    icon: <AccountCircleIcon />,
+    link: "/profile", 
   },
   {
     title: "Settings",

@@ -35,7 +35,7 @@ exports.createProject = async (req, res) => {
 exports.importArticles = async (req, res) => {
     const { projectId } = req.params;
     const { pubmedIds } = req.body;
-    const files = req.files;
+    const files = req.files; // Assuming you're using middleware like multer for file handling
 
     try {
         const project = await Project.findById(projectId);
@@ -45,35 +45,37 @@ exports.importArticles = async (req, res) => {
 
         // Process PubMed IDs
         if (pubmedIds) {
-            for (const pubmedId of pubmedIds) {
-                const studyDetails = await fetchStudyFromPubMed(pubmedId);
-                if (studyDetails) {
-                    const { title, authors, pubdate } = studyDetails;
-                    const newArticle = new Article({
-                        title,
-                        authors,
-                        publicationDate: pubdate,
-                        documentType: 'pubmed'
-                    });
-                    await newArticle.save();
-                    project.studies.push(newArticle._id);
-                } else {
-                    // Handling error
-                }
+            const ids = pubmedIds.split(',').map(id => id.trim());
+            for (const id of ids) {
+                const studyDetails = await fetchStudyFromPubMed(id);
+if (studyDetails) {
+    const { title, authors, pubdate, abstract } = studyDetails;
+    const newArticle = new Article({
+        title,
+        authors,
+        publicationDate: pubdate,
+        abstract, // Storing the abstract
+        documentType: 'pubmed',
+        projectId: projectId
+    });
+    await newArticle.save();
+    project.studies.push(newArticle._id);
+} else {
+    console.log(`No data found for PubMed ID: ${id}`);
+}
             }
         }
 
         // Process file uploads
-        if (files) {
+        if (files && files.length > 0) {
             for (const file of files) {
-                //to do: extract metadata from the file
-                const metadata = {}; // to do later( replace with real metadata)
+                
                 const newArticle = new Article({
-                    // ...metadata,
+                    title: file.originalname, // Placeholder, adjust as needed
                     documentLink: file.path,
-                    documentType: file.mimetype.includes('pdf') ? 'pdf' : 'xml'
+                    documentType: 'pdf',
+                    projectId: projectId 
                 });
-
                 await newArticle.save();
                 project.studies.push(newArticle._id);
             }
@@ -82,6 +84,7 @@ exports.importArticles = async (req, res) => {
         await project.save();
         res.status(200).json({ message: "Articles imported successfully", project });
     } catch (error) {
+        console.error(`Failed to import articles for project ${projectId}:`, error);
         res.status(500).json({ message: "Failed to import articles", error: error.message });
     }
 };
@@ -202,5 +205,33 @@ exports.deleteProject = async (req, res) => {
         res.status(500).json({ message: "Failed to delete project", error: error.message });
     }
 };
+
+//fetch all studies for a project
+exports.getStudies = async (req, res) => {
+    const { projectId } = req.params;
+
+    try {
+        const project = await
+        Project.findById(projectId)
+        .populate('studies');
+        if (!project) {
+            return res.status(404).json({ message: "Project not found" });
+        }
+        res.status(200).json({ message: "Studies fetched successfully", studies: project.studies });
+    }
+    catch (error) {
+        res.status(500).json({ message: "Failed to fetch studies", error: error.message });
+    }
+}
+
+exports.getProjects = async (req, res) => {
+    try {
+        const projects = await Project.find();
+        res.status(200).json({ message: "Projects fetched successfully", projects });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to fetch projects", error: error.message });
+    }
+}
+
 
 

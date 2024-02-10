@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../App.css'; 
 import Projects from '../Projects/Projects';
 import CompletedProjects from '../Projects/CompletedProjects'; 
@@ -8,20 +8,43 @@ import Modal from 'react-modal';
 import 'reactjs-popup/dist/index.css';
 import AddIcon from '@mui/icons-material/Add';
 import ProjectForm from '../../Components/projectForm';
+import axios from 'axios';
+import { useParams } from 'react-router-dom'; 
 
 function Dashboard() {
   const hasNotifications = true;
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [projects, setProjects] = useState([]);
   const [projectTitle, setProjectTitle] = useState('');
+  const { projectId } = useParams();
+  const [studies, setStudies] = useState([]);
 
   const openModal = () => {
     setModalIsOpen(true);
   };
 
+  const addNewProject = (project) => {  
+    setProjects(prevProjects => [...prevProjects,{ title: project.title, ...project }]);
+  };
   const closeModal = () => {
     setModalIsOpen(false);
   };
+
+  const fetchProjects = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/api/projects/display');
+      setProjects(response.data.projects);
+    } catch (error) {
+      console.error('Failed to fetch projects:', error);
+    }
+  };
+
+
+  // Fetch projects when the component mounts
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
   
   return (
     <div className="Dashboard">
@@ -49,6 +72,13 @@ function Dashboard() {
             </div>
           )}
           <h2 className="SectionTitle">Projects</h2>
+          <div>
+  {projects.map((project) => (
+    <div key={project._id} className="project-card">
+      <h3>{project.title}</h3>
+    </div>
+  ))}
+</div>
           <Projects projects={projects} setProjects={setProjects} />
           <button className="CreateButton" onClick={openModal}>
             Create new Project
@@ -67,7 +97,7 @@ function Dashboard() {
             }}
           >
             <button onClick={closeModal}>Close </button>
-            <ProjectForm setProjectTitle={setProjectTitle} closeModal={closeModal}  />
+            <ProjectForm setProjectTitle={setProjectTitle} closeModal={closeModal} onProjectCreated={addNewProject}  />
           </Modal>
           <h2 className="SectionTitle">Completed Projects</h2>
           <CompletedProjects />

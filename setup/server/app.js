@@ -48,6 +48,8 @@ app.use('/api', teamRoutes);
 app.use('/api', roleRoutes);
 app.use('/api', userRoutes);
 app.use('/api', loginRoutes);
+app.use('/uploads', express.static('uploads'));
+
 
 
 

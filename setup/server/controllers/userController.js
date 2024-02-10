@@ -74,4 +74,3 @@ exports.assignRole = async (req, res) => {
     }
 }
 
-

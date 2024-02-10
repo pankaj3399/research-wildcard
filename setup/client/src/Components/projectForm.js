@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Steps, Select, message, Upload, DatePicker, List } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import axios from 'axios';
@@ -7,42 +7,38 @@ const { Step } = Steps;
 const { Option } = Select;
 const { TextArea } = Input;
 const Dragger = Upload.Dragger;
+
 const initialProjectDataState = {
     title: '',
     description: '',
     collaborators: [],
     roles: [],
-    articles: []
+    articles: [],
+    pubmedIds: '' // Added for PubMed IDs
 };
-
 
 const ProjectForm = () => {
     const [currentStep, setCurrentStep] = useState(0);
-    const [projectData, setProjectData] = useState({
-        title: '',
-        description: '',
-        collaborators: [],
-        roles: [],
-        articles: []
-    });
+    const [projectData, setProjectData] = useState(initialProjectDataState);
     const [users, setUsers] = useState([]);
     const [roles, setRoles] = useState([]);
     const [usersMap, setUsersMap] = useState({});
     const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
+    const [studies, setStudies] = useState([]);
+    const [projects, setProjects] = useState([]);
+
 
     useEffect(() => {
         const fetchEmployees = async () => {
             try {
                 const response = await axios.get('http://localhost:3000/api/users');
-                console.log("Fetched users response:", response.data); // Log #1: Raw response from /api/users
-                const options = response.data.map(users => ({
-                    value: users._id,
-                    label: users.name
+                const options = response.data.map(user => ({
+                    value: user._id,
+                    label: user.name
                 }));
-                console.log("Processed users for select options:", options); // Log #2: Processed data for Select component
                 setUsers(options);
-                setUsersMap(response.data.reduce((map, users) => ({...map, [users._id]: users.name}), {}));
+                setUsersMap(response.data.reduce((map, user) => ({...map, [user._id]: user.name}), {}));
             } catch (error) {
                 console.error('Error fetching employees:', error);
             }
@@ -52,77 +48,67 @@ const ProjectForm = () => {
     }, []);
 
     useEffect(() => {
-        console.log("Updated users state:", users); // Log #3: Check the updated 'users' state
-    }, [users]);
+        const fetchStudiesAndProjects = async () => {
+            try {
+                const studiesResponse = await axios.get('http://localhost:3000/api/projects/:projectId/articles');
+                setStudies(studiesResponse.data);
+    
+                const projectsResponse = await axios.get('http://localhost:3000/api/projects/display');
+                setProjects(projectsResponse.data);
+            } catch (error) {
+                console.error('Error fetching studies and projects:', error);
+            }
+        };
+    
+        fetchStudiesAndProjects();
+    }, []);
 
-    useEffect(() => {
-        console.log("Current collaborators selection:", projectData.collaborators); // Log #6: Monitor collaborator selections
-    }, [projectData.collaborators]);
-    
-    
-    
+
 
     const handleChange = (key, value) => {
-        console.log(`Value before setting ${key}:`, value); // Log #5: Check value before setting state
         setProjectData({ ...projectData, [key]: value });
     };
-    
-    
 
     const handleFileChange = info => {
-        // Assuming you want to post articles directly on form submission rather than immediately
-        let articleList = [...info.articleList];
-        // You might want to process articleList here
-        handleChange('articles', articleList);
+        let fileList = [...info.fileList];
+        handleChange('articles', fileList);
     };
-    
 
     const handleSubmit = async () => {
         setLoading(true);
     
         try {
-            // 1. Create project
-            const projectResponse = await axios.post('/api/projects', {
+            // Create project
+            const projectResponse = await axios.post('http://localhost:3000/api/projects', {
                 title: projectData.title,
                 description: projectData.description,
-                startDate: projectData.startDate, // Assuming you have a start date
-                collaborators: projectData.collaborators.map(c => c.userId), // Just sending user IDs initially
+                startDate: projectData.startDate,
+                collaborators: projectData.collaborators,
             });
     
-            // 2. Upload articles (if any)
-            if (projectData.articles && projectData.articles.length > 0) {
-                const formData = new FormData();
-                projectData.articles.forEach(file => {
-                    formData.append('articles', file.originFileObj);
-                });
+            // Upload articles (if any)
+            const formData = new FormData();
+            formData.append('pubmedIds', projectData.pubmedIds); // Include PubMed IDs
+            projectData.articles.forEach(file => {
+                formData.append('articles', file.originFileObj);
+            });
     
-                await axios.post(`/api/projects/${projectResponse.data.project._id}/articles`, formData, {
-                    headers: { 'Content-Type': 'multipart/form-data' },
-                });
-            }
+            await axios.post(`http://localhost:3000/api/projects/${projectResponse.data.project._id}/articles`, formData, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
+
+            // Assign roles to collaborators (as needed)
     
-            // 3. Assign roles to collaborators
-            for (const collaborator of projectData.collaborators) {
-                await axios.post('/api/userRoles/assignRole', {
-                    userId: collaborator.userId,
-                    roleId: collaborator.roleId,
-                    projectId: projectResponse.data.project._id,
-                    // Include teamId if applicable
-                });
-            }
-    
-            // Final Step: Confirmation and Cleanup
             message.success('Project created successfully!');
             setLoading(false);
             setCurrentStep(0);
-            setProjectData(initialProjectDataState); 
+            setProjectData(initialProjectDataState);
         } catch (error) {
             console.error('Error creating project:', error);
             setLoading(false);
             message.error('Failed to create project. Please try again.');
         }
     };
-
     const steps = [
         {
             title: 'Project Details',
@@ -188,11 +174,14 @@ const ProjectForm = () => {
             title: 'Upload articles',
             content: (
                 <div>
+                    <Form.Item label="PubMed IDs" name="pubmedIds">
+                        <Input placeholder="Enter PubMed IDs separated by commas" value={projectData.pubmedIds} onChange={e => handleChange('pubmedIds', e.target.value)} />
+                    </Form.Item>
                     <Dragger
                         name="articles"
                         multiple
                         onChange={handleFileChange}
-                       
+                        beforeUpload={() => false} // Prevent file upload here
                     >
                         <p className="ant-upload-drag-icon">
                             <InboxOutlined />

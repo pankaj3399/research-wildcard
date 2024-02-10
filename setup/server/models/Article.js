@@ -7,6 +7,12 @@ const articleSchema = new Schema({
   abstract: String,
   publicationDate: Date,
   documentLink: String,
+  screeningStatus: { type: String, default: 'unreviewed', enum: ['included', 'excluded', 'maybe', 'unreviewed'] },
+  needsThirdPartyReview: { type: Boolean, default: false },
+  projectId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Project'
+  },
   documentType: {
     type: String,
     enum: ['pdf', 'xml', 'pubmed'],

@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -6,43 +8,55 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
-import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
-import Modal from 'react-modal';
 import 'reactjs-popup/dist/index.css';
-import TitleScreen from './TitleScreen';
-import CloseIcon from '@mui/icons-material/Close';
+import "../../App.css";
+import CssBaseline from '@mui/material/CssBaseline';
+
+
+//import { Link, useHistory } from 'react-router-dom';
+
 
 const OneProject = () => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [projectData, setProjectData] = useState(null);
+  const { projectId } = useParams();
+  const navigate = useNavigate();
 
-  const openModal = () => {
-    setModalIsOpen(true);
-  };
+  const fetchProjectData = useCallback(async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/project/${projectId}`, {
+        headers: { /* ... your auth headers if needed ... */ }
+      });
+      setProjectData(response.data); 
+    } catch (error) {
+      console.error('Error fetching project data:', error);
+    }
+  }, [projectId]); 
 
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
+  useEffect(() => {
+    fetchProjectData();
+  }, [fetchProjectData]); 
+
+  
 
   const handleContinueTitle = () => {
-    console.log('Continuing Screening');
-    openModal(); // Open the modal
+    navigate('/titleabstract');
   };
 
-  const handleContinueIntro = () => {
-    console.log('Button 2 clicked');
+  const handleContinueFullText = () => {
+    navigate('/fulltext')
   };
 
-  const handleContinueFull = () => {
-    console.log('Button 3 clicked');
+  const handleContinueExtraction = () => {
+    navigate('/extraction')
   };
 
   const tiers = [
     {
-      title: 'Title review',
+      title: 'Title & Abstract',
       progress: '30',
       description: [
         'You have screened 12 studies today',
@@ -55,7 +69,7 @@ const OneProject = () => {
       onClick: handleContinueTitle,
     },
     {
-      title: 'Introduction review',
+      title: 'Full text',
       progress: '27',
       description: [
         'You have screened 6 studies today',
@@ -65,10 +79,10 @@ const OneProject = () => {
       ],
       buttonText: 'Continue Screening',
       buttonVariant: 'contained',
-      onClick: handleContinueIntro,
+      onClick: handleContinueFullText,
     },
     {
-      title: 'Full text review',
+      title: 'Data Extraction',
       progress: '12',
       description: [
         'You have screened 4 studies today',
@@ -76,9 +90,9 @@ const OneProject = () => {
         'Both reviewed 7 studies',
         '3 conflicts waiting to be resolved',
       ],
-      buttonText: 'Continue Screening',
+      buttonText: 'Continue Extraction',
       buttonVariant: 'contained',
-      onClick: handleContinueFull,
+      onClick: handleContinueExtraction ,
     },
   ];
 
@@ -88,7 +102,8 @@ const OneProject = () => {
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
       <CssBaseline />
-
+      
+    <div className="MainContent">
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
         <Typography
           component="h1"
@@ -97,7 +112,7 @@ const OneProject = () => {
           color="text.primary"
           gutterBottom
         >
-          Project A
+          {projectData ? projectData.title : 'Loading...'}
         </Typography>
         <Typography variant="h5" align="center" color="text.secondary" component="p">
           Welcome back, see your overall progress and continue screening
@@ -114,7 +129,7 @@ const OneProject = () => {
               sm={tier.title === 'Full text review' ? 12 : 6}
               md={4}
             >
-              <Card>
+              <Card sx={{height: '100%'}}> 
                 <CardHeader
                   title={tier.title}
                   subheader={tier.subheader}
@@ -165,26 +180,7 @@ const OneProject = () => {
           ))}
         </Grid>
       </Container>
-
-      {/* Modal */}
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Create New Project"
-        style={{
-          content: {
-            width: '80%',
-            height: '80%',
-            margin: 'auto',
-          },
-        }}
-      >
-          <button className="CloseButton" onClick={closeModal}>
-          <CloseIcon />
-          </button>
-       
-        <TitleScreen />
-      </Modal>
+      </div>
     </ThemeProvider>
   );
 };

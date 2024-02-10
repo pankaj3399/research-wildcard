@@ -26,7 +26,7 @@ const upload = multer({
 router.post('/projects', verifyPermission(actions.CREATE_PROJECT), projectController.createProject);
 
 // Import articles into a project (handles both PubMed IDs and file uploads)
-router.post('/projects/:projectId/articles', verifyPermission(actions.IMPORT_ARTICLES), upload.array('files'), projectController.importArticles);
+router.post('/projects/:projectId/articles', verifyPermission(actions.IMPORT_ARTICLES), upload.array('articles'), projectController.importArticles);
 
 // Update an article's review status within a project
 router.put('/projects/:projectId/articles/:articleId/reviewStatus', verifyPermission(actions.UPDATE_ARTICLE_REVIEW_STATUS), projectController.updateArticleReviewStatus);
@@ -42,5 +42,11 @@ router.post('/projects/:projectId/collaborators', verifyPermission(actions.ADD_C
 
 // Delete a project
 router.delete('/projects/:projectId', verifyPermission(actions.DELETE_PROJECT), projectController.deleteProject);
+
+// fetch studies
+router.get('/projects/:projectId/articles', verifyPermission(actions.GET_STUDIES), projectController.getStudies);
+
+//fetch projects
+router.get('/projects/display', verifyPermission(actions.GET_PROJECTS), projectController.getProjects);
 
 module.exports = router;

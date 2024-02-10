@@ -37,9 +37,7 @@ function Projects({ projects = [], setProjects }) {
 
   useEffect(() => {
     fetchProjects();
-  }
-  , []);
-
+  }, [fetchProjects]); 
 
   return (
     <div className="ProjectsSection">

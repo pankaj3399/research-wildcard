@@ -1,0 +1,81 @@
+PMID- 31471749
+OWN - NLM
+STAT- MEDLINE
+DCOM- 20200416
+LR  - 20231104
+IS  - 1534-3170 (Electronic)
+IS  - 1523-3782 (Print)
+IS  - 1523-3782 (Linking)
+VI  - 21
+IP  - 10
+DP  - 2019 Aug 30
+TI  - Cardiovascular Disease and Hair Cortisol: a Novel Biomarker of Chronic Stress.
+PG  - 116
+LID - 10.1007/s11886-019-1208-7 [doi]
+LID - 116
+AB  - PURPOSE OF REVIEW: This review focuses on the concentration of cortisol in human 
+      hair as a biomarker of chronic stress in cardiovascular disease (CVD). We outline 
+      the cardiovascular consequences of cortisol excess and provide a comprehensive 
+      overview of recent studies investigating the relationship of hair cortisol with 
+      CVD. In addition, clinical implications and limitations of the evidence are 
+      discussed, together with directions for future research. RECENT FINDINGS: Hair 
+      cortisol may be a reliable biomarker of chronic stress since it provides 
+      quantification of total cortisol secreted into hair over several weeks. A growing 
+      body of evidence suggests that elevated hair cortisol levels are associated with 
+      both the incidence of CVD and poorer recovery and treatment outcomes. Moreover, 
+      increased hair cortisol concentration has been linked with established 
+      cardiometabolic risk factors for CVD including high blood pressure, diabetes, and 
+      adiposity. Hair cortisol is a promising biomarker of chronic cortisol excess 
+      which may contribute to both the pathogenesis and prognosis of CVD. However, the 
+      current evidence relies on small-scale cross-sectional studies. Further research 
+      adopting longitudinal designs across larger samples of CVD patients and healthy 
+      participants is required to inform the development of novel evidence-based 
+      interventions.
+CI - Iob, Eleonora
+AU  - Iob E
+AD  - Department of Behavioural Science and Health, University College London, UCL, 
+      Gower Street, London, WC1E 6BT, UK. eleonora.iob.17@ucl.ac.uk.
+FAU - Steptoe, Andrew
+AU  - Steptoe A
+AD  - Department of Behavioural Science and Health, University College London, UCL, 
+      Gower Street, London, WC1E 6BT, UK.
+LA  - eng
+GR  - BB_/Biotechnology and Biological Sciences Research Council/United Kingdom
+PT  - Journal Article
+PT  - Research Support, Non-U.S. Gov't
+PT  - Review
+DEP - 20190830
+PL  - United States
+TA  - Curr Cardiol Rep
+JT  - Current cardiology reports
+JID - 100888969
+RN  - 0 (Biomarkers)
+RN  - WI4X0X7BPJ (Hydrocortisone)
+SB  - IM
+MH  - Biomarkers/analysis
+MH  - Cardiovascular Diseases
+MH  - Chronic Disease
+MH  - Hair/chemistry/*metabolism
+MH  - Humans
+MH  - Hydrocortisone/analysis/*metabolism
+MH  - Saliva/*chemistry
+MH  - Stress, Physiological
+MH  - Stress, Psychological/*diagnosis
+PMC - PMC6717172
+OTO - NOTNLM
+OT  - Cardiometabolic markers
+OT  - Cardiovascular disease
+OT  - Chronic stress
+OT  - Hair cortisol
+COIS- Eleonora Iob and Andrew Steptoe declare that they have no conflict of interest.
+EDAT- 2019/09/01 06:00
+MHDA- 2020/04/17 06:00
+CRDT- 2019/09/01 06:00
+PHST- 2019/09/01 06:00 [entrez]
+PHST- 2019/09/01 06:00 [pubmed]
+PHST- 2020/04/17 06:00 [medline]
+AID - 10.1007/s11886-019-1208-7 [pii]
+AID - 1208 [pii]
+AID - 10.1007/s11886-019-1208-7 [doi]
+PST - epublish
+SO  - Curr Cardiol Rep. 2019 Aug 30;21(10):116. doi: 10.1007/s11886-019-1208-7.

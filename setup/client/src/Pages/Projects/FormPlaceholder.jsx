@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, TextField, Typography, Box, Divider, Button, ThemeProvider, createTheme } from '@mui/material';
+import { Paper, TextField, Typography, Divider, Button, ThemeProvider, createTheme } from '@mui/material';
 import '../../App.css';
 import SaveIcon from '@mui/icons-material/Save';
 import { Link } from 'react-router-dom';
@@ -85,7 +85,7 @@ const FormPlaceholder = () => {
       <Divider style={{ margin: '10px 0' }} />
 
       <div style={{marginRight:'10px'}}>
-        <Button component={Link} to="/dashboard" variant="contained" startIcon={<SaveIcon />}>Save</Button>
+        <Button component={Link} to="/oneproject/:projectId" variant="contained" startIcon={<SaveIcon />}>Save</Button>
       </div>
       
       

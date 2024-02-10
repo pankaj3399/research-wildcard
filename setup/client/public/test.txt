@@ -1,0 +1,113 @@
+PMID- 28578301
+OWN - NLM
+STAT- MEDLINE
+DCOM- 20180417
+LR  - 20220311
+IS  - 1873-3360 (Electronic)
+IS  - 0306-4530 (Print)
+IS  - 0306-4530 (Linking)
+VI  - 83
+DP  - 2017 Sep
+TI  - Diurnal cortisol slopes and mental and physical health outcomes: A systematic 
+      review and meta-analysis.
+PG  - 25-41
+LID - S0306-4530(17)30265-2 [pii]
+LID - 10.1016/j.psyneuen.2017.05.018 [doi]
+AB  - Changes in levels of the stress-sensitive hormone cortisol from morning to 
+      evening are referred to as diurnal cortisol slopes. Flatter diurnal cortisol 
+      slopes have been proposed as a mediator between chronic psychosocial stress and 
+      poor mental and physical health outcomes in past theory and research. 
+      Surprisingly, neither a systematic nor a meta-analytic review of associations 
+      between diurnal cortisol slopes and health has been conducted to date, despite 
+      extensive literature on the topic. The current systematic review and 
+      meta-analysis examined associations between diurnal cortisol slopes and physical 
+      and mental health outcomes. Analyses were based on 179 associations from 80 
+      studies for the time period up to January 31, 2015. Results indicated a 
+      significant association between flatter diurnal cortisol slopes and poorer health 
+      across all studies (average effect size, r=0.147). Further, flatter diurnal 
+      cortisol slopes were associated with poorer health in 10 out of 12 subtypes of 
+      emotional and physical health outcomes examined. Among these subtypes, the effect 
+      size was largest for immune/inflammation outcomes (r=0.288). Potential moderators 
+      of the associations between diurnal cortisol slopes and health outcomes were 
+      examined, including type of slope measure and study quality indices. The possible 
+      roles of flatter slopes as either a marker or a mechanism for disease etiology 
+      are discussed. We argue that flatter diurnal cortisol slopes may both reflect and 
+      contribute to stress-related dysregulation of central and peripheral circadian 
+      mechanisms, with corresponding downstream effects on multiple aspects of biology, 
+      behavior, and health.
+CI  - Copyright © 2017 Elsevier Ltd. All rights reserved.
+FAU - Adam, Emma K
+AU  - Adam EK
+AD  - School of Education and Social Policy and Institute for Policy Research, 
+      Northwestern University, 2120 Campus Drive, Evanston, IL, 60208, USA. Electronic 
+      address: ek-adam@northwestern.edu.
+FAU - Quinn, Meghan E
+AU  - Quinn ME
+AD  - Department of Psychology, Northwestern University, 2029 Sheridan Rd., Evanston, 
+      IL 60208, USA; Department of Psychiatry, University of Illinois at Chicago, 912 
+      S. Wood St., Chicago, IL, 60612, USA. Electronic address: meghanequinn@gmail.com.
+FAU - Tavernier, Royette
+AU  - Tavernier R
+AD  - Department of Psychology, Wesleyan University, 207 High Street, Middletown, CT, 
+      06459, USA. Electronic address: rtavernier@wesleyan.edu.
+FAU - McQuillan, Mollie T
+AU  - McQuillan MT
+AD  - School of Education and Social Policy and Institute for Policy Research, 
+      Northwestern University, 2120 Campus Drive, Evanston, IL, 60208, USA,. Electronic 
+      address: MollieM@u.northwestern.edu.
+FAU - Dahlke, Katie A
+AU  - Dahlke KA
+AD  - American Institutes for Research, 1120 E. Diehl Road, Suite 200, Naperville, IL, 
+      60563, USA. Electronic address: kdahlke@air.org.
+FAU - Gilbert, Kirsten E
+AU  - Gilbert KE
+AD  - Department of Psychiatry, Washington University in St. Louis, 4444 Forest Park 
+      Parkway, Suite 2100, St. Louis, MO, USA. Electronic address: gilbertk@wustl.edu.
+LA  - eng
+GR  - R21 AA021073/AA/NIAAA NIH HHS/United States
+GR  - T32 MH100019/MH/NIMH NIH HHS/United States
+PT  - Journal Article
+PT  - Meta-Analysis
+PT  - Review
+PT  - Systematic Review
+DEP - 20170524
+PL  - England
+TA  - Psychoneuroendocrinology
+JT  - Psychoneuroendocrinology
+JID - 7612148
+RN  - WI4X0X7BPJ (Hydrocortisone)
+SB  - IM
+MH  - Circadian Rhythm/*physiology
+MH  - Emotions
+MH  - Female
+MH  - Humans
+MH  - Hydrocortisone/*analysis/metabolism/physiology
+MH  - Hypothalamo-Hypophyseal System/chemistry
+MH  - Male
+MH  - Mental Health
+MH  - Pituitary-Adrenal System/chemistry
+MH  - Saliva/chemistry
+MH  - Stress, Psychological/metabolism/physiopathology
+PMC - PMC5568897
+MID - NIHMS881368
+OTO - NOTNLM
+OT  - Circadian rhythms
+OT  - Diurnal cortisol slopes
+OT  - Hypothalamic pituitary adrenal (HPA) axis
+OT  - Mental health
+OT  - Physical health
+COIS- Conflicts of Interest The authors have no conflicts of interest to report.
+EDAT- 2017/06/05 06:00
+MHDA- 2018/04/18 06:00
+CRDT- 2017/06/05 06:00
+PHST- 2017/03/17 00:00 [received]
+PHST- 2017/05/16 00:00 [revised]
+PHST- 2017/05/19 00:00 [accepted]
+PHST- 2017/06/05 06:00 [pubmed]
+PHST- 2018/04/18 06:00 [medline]
+PHST- 2017/06/05 06:00 [entrez]
+AID - S0306-4530(17)30265-2 [pii]
+AID - 10.1016/j.psyneuen.2017.05.018 [doi]
+PST - ppublish
+SO  - Psychoneuroendocrinology. 2017 Sep;83:25-41. doi: 10.1016/j.psyneuen.2017.05.018. 
+      Epub 2017 May 24.

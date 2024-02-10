@@ -8,6 +8,11 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { CSVLink } from 'react-csv';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import DownloadIcon from '@mui/icons-material/GetApp';
+import '../../App.css'; 
+
 
 const columns = [
   { id: 'title', label: 'Title', minWidth: 170 },
@@ -57,8 +62,16 @@ export default function StickyHeadTable() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Typography variant="h5" align="center" color="text.secondary" component="p">
+          Export results
+    </Typography>
+    <Button variant="outlined" >
+        <CSVLink filename="my-file.csv" data={csvData}>
+          <DownloadIcon /> Export to CSV
+        </CSVLink>
+      </Button>
     
-    <Paper sx={{ width: '100%', overflow: 'hidden', marginLeft:'250px'}}>
+    <Paper sx={{ width: '100%', overflow: 'hidden', marginLeft:'250px', marginTop: '50px'}}>
       <TableContainer sx={{ maxHeight: 440 , overflowX: 'auto'}}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -107,11 +120,7 @@ export default function StickyHeadTable() {
       />
   
     </Paper>
-    <div style={{ marginTop: 'auto', marginBottom: '20px' }}>
-        <CSVLink filename="my-file.csv" data={csvData}>
-          Export to CSV
-        </CSVLink>
-      </div>
+ 
        
      </div>
   );

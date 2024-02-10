@@ -1,0 +1,53 @@
+PMID- 16019585
+OWN - NLM
+STAT- MEDLINE
+DCOM- 20050823
+LR  - 20131121
+IS  - 1025-3890 (Print)
+IS  - 1025-3890 (Linking)
+VI  - 7
+IP  - 4
+DP  - 2004 Dec
+TI  - Cortisol in mood disorders.
+PG  - 205-8
+AB  - Dysfunction of the hypothalamic-pituitary-adrenal (HPA) axis has been 
+      well-described in mood disorders. Hypercortisolaemia, which has been attributed 
+      to a breakdown in glucocorticoid-receptor-mediated negative feedback mechanisms 
+      within the HPA axis, may be central to the pathogenesis of both the depressive 
+      symptoms and the cognitive deficits, which characterise severe mood disorders. 
+      Strategies to normalise glucocorticoid receptor (GR) function, and thus restore 
+      HPA functional integrity, have been the focus of recent research. Preliminary 
+      preclinical and clinical studies report encouraging results which suggest that 
+      lowering circulating cortisol levels, by up-regulating GRs, may have therapeutic 
+      efficacy in terms of improvements in depressive symptoms and cognitive 
+      functioning.
+CI - Young, Allan H
+AU  - Young AH
+AD  - School of Neurology, Neurobiology and Psychiatry, University of Newcastle upon 
+      Tyne, Royal Victoria Infirmary, UK. a.h.young@ncl.ac.uk
+LA  - eng
+PT  - Journal Article
+PT  - Review
+PL  - England
+TA  - Stress
+JT  - Stress (Amsterdam, Netherlands)
+JID - 9617529
+RN  - WI4X0X7BPJ (Hydrocortisone)
+SB  - IM
+MH  - Animals
+MH  - Humans
+MH  - Hydrocortisone/antagonists & inhibitors/blood/*physiology
+MH  - Hypothalamo-Hypophyseal System/physiology
+MH  - Mood Disorders/drug therapy/*physiopathology
+MH  - Pituitary-Adrenal System/physiology
+RF  - 29
+EDAT- 2005/07/16 09:00
+MHDA- 2005/08/24 09:00
+CRDT- 2005/07/16 09:00
+PHST- 2005/07/16 09:00 [pubmed]
+PHST- 2005/08/24 09:00 [medline]
+PHST- 2005/07/16 09:00 [entrez]
+AID - P36270M5UL1R1614 [pii]
+AID - 10.1080/10253890500069189 [doi]
+PST - ppublish
+SO  - Stress. 2004 Dec;7(4):205-8. doi: 10.1080/10253890500069189.

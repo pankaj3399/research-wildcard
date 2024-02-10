@@ -30,6 +30,8 @@ const actions = {
     UPDATE_USER_ROLE: "update_user_role",
     REMOVE_ROLE_FROM_USER: "remove_role_from_user",
     LIST_USER_ROLES: "list_user_roles",
+    GET_STUDIES: "get_articles",
+    GET_PROJECTS: "get_projects",
 };
 
 module.exports = actions;
