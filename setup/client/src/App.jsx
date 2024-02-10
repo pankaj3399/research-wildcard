@@ -16,6 +16,7 @@ import ProfilePage from './Pages/Profile/ProfilePage';
 
 
 
+
 function App() {
   return (
     <div>
@@ -31,7 +32,10 @@ function App() {
           <Route path='/prisma' element={<><Sidebar /></>} />
           <Route path='/profile' element={<><Sidebar/><ProfilePage /></>} />
           <Route path='/settings' element={<><Sidebar/></>} />
-          <Route path='/export' element={<><Sidebar/><Export /></>} />
+          <Route path='/titleabstract/:projectId' element={<><Sidebar/><TitleAbstract /></>} />
+
+
+
 
           {/* <Route path="/oneproject/:projectId" component={OneProject} /> */}
           </Routes>

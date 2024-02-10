@@ -43,8 +43,9 @@ const OneProject = () => {
   
 
   const handleContinueTitle = () => {
-    navigate('/titleabstract');
+    navigate(`/titleabstract/${projectId}`);
   };
+  
 
   const handleContinueFullText = () => {
     navigate('/fulltext')
