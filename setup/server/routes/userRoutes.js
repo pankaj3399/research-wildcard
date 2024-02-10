@@ -17,8 +17,7 @@ router.delete('/users/:userId', verifyPermission(actions.DELETE_USER), UserContr
 // Route to list all users
 router.get('/users', verifyPermission(actions.LIST_USERS), UserController.listUsers);
 
-//Route to login user
-router.post('/users/login', UserController.loginUser);
+
 
 
 module.exports = router;

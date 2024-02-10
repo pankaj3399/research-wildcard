@@ -14,6 +14,7 @@ const app = express();
 const teamRoutes = require('./routes/teamRoutes'); // Adjust the path as necessary
 const userRoleRoutes = require('./routes/userRoleRoutes'); // Adjust the path as necessary
 const roleRoutes = require('./routes/roleRoutes'); // Adjust the path as necessary
+const loginRoutes = require('./routes/loginRoutes'); // Adjust the path as necessary
 
 
 //db
@@ -46,6 +47,7 @@ app.use('/api/userRoles', userRoleRoutes);
 app.use('/api', teamRoutes);
 app.use('/api', roleRoutes);
 app.use('/api', userRoutes);
+app.use('/api', loginRoutes);
 
 
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Form, Input, Button, Steps, Select, message, Upload, DatePicker } from 'antd';
+import { Form, Input, Button, Steps, Select, message, Upload, DatePicker, List } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import axios from 'axios';
 
@@ -144,7 +144,7 @@ const ProjectForm = () => {
             title: 'Collaborators',
             content: (
                 <div>
-                    <Form.Item label="Collaborators" name="collaborators" rules={[{ required: true, message: 'Please select at least one collaborator!' }]}>
+                    <Form.Item label="Collaborators" name="collaborators" rules={[{ required: true, message: 'Please select at least two collaborator!' }]}>
     <Select
         mode="multiple"
         placeholder="Select collaborators"
@@ -156,30 +156,34 @@ const ProjectForm = () => {
         ))}
     </Select>
 </Form.Item>
+<List
+    itemLayout="horizontal"
+    dataSource={projectData.collaborators.map(userId => ({id: userId, name: usersMap[userId]}))}
+    renderItem={user => (
+        <List.Item>
+            <List.Item.Meta
+                title={user.name}
+            />
+            <Form.Item name={`role-${user.id}`} rules={[{ required: true, message: 'Please select a role!' }]}>
+                <Select
+                    placeholder="Select role"
+                    onChange={value => handleChange('roles', projectData.roles.map(r => r.userId === user.id ? { ...r, roleId: value } : r))}
+                >
+                    {roles.map(role => (
+                        <Option key={role._id} value={role._id}>{role.name}</Option>
+                    ))}
+                </Select>
+            </Form.Item>
+        </List.Item>
+    )}
+/>
+
+        
 
                 </div>
             ),
         },
-        {
-            title: 'Roles',
-            content: (
-                <div>
-                    {projectData.collaborators.map(collaborator => (
-                        <Form.Item key={collaborator.userId} label={`Role for ${collaborator.name}`} name={`role-${collaborator.userId}`} rules={[{ required: true, message: `Please select a role for ${collaborator.name}!` }]}>
-                            <Select
-                                placeholder={`Select role for ${collaborator.name}`}
-                                value={collaborator.roleId}
-                                onChange={value => handleChange('collaborators', projectData.collaborators.map(c => c.userId === collaborator.userId ? { ...c, roleId: value } : c))}
-                            >
-                                {roles.map(role => (
-                                    <Option key={role._id} value={role._id}>{role.name}</Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    ))}
-                </div>
-            ),
-        },
+        
         {
             title: 'Upload articles',
             content: (
@@ -188,7 +192,7 @@ const ProjectForm = () => {
                         name="articles"
                         multiple
                         onChange={handleFileChange}
-                        beforeUpload={() => false} // Prevent file upload here
+                       
                     >
                         <p className="ant-upload-drag-icon">
                             <InboxOutlined />
