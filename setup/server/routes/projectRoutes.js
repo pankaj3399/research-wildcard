@@ -49,4 +49,9 @@ router.get('/projects/:projectId/articles', verifyPermission(actions.GET_STUDIES
 //fetch projects
 router.get('/projects/display', verifyPermission(actions.GET_PROJECTS), projectController.getProjects);
 
+//fetch project by id
+
+router.get('/projects/:projectId', verifyPermission(actions.GET_PROJECT), projectController.getProjectById);
+
+
 module.exports = router;

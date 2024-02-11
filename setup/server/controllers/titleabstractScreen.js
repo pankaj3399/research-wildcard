@@ -1,4 +1,4 @@
-// Assuming you have a file named studyController.js or similar
+
 
 const Study = require('../models/Article'); // Ensure you import your Study model correctly
 
