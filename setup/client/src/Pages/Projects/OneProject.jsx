@@ -48,11 +48,11 @@ const OneProject = () => {
   
 
   const handleContinueFullText = () => {
-    navigate('/fulltext')
+    navigate('/fulltext/${projectId}')
   };
 
   const handleContinueExtraction = () => {
-    navigate('/extraction')
+    navigate('/extraction/${projectId}')
   };
 
   const tiers = [
