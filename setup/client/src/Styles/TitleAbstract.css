@@ -1,0 +1,244 @@
+.Articles {
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100vh;
+
+    * {
+        margin: 0;
+    }
+
+    .header {
+        width: 100%;
+        background-color: white;
+        padding: 8px 10px;
+        border-radius: 5px;
+    }
+
+    .main-body {
+        display: flex;
+        height: 88%;
+        gap: 1%;
+
+        .articles-sidebar {
+            width: 35%;
+            background-color: white;
+            border-radius: 5px;
+            padding: 10px;
+
+            .articles-sidebar-header {
+                color: rgb(0, 21, 128);
+                font-weight: bold;
+                position: absolute;
+            }
+
+            .articles-sidebar-content {
+                margin-top: 35px;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                overflow-y: auto;
+
+                .sidebar-item {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+
+                    .seperator {
+                        border-bottom: 1px solid grey;
+                        width: 100%;
+                        margin-bottom: 2px;
+                    }
+
+                    .sidebar-item-content {
+                        width: 100%;
+                        padding: 8px 5px;
+                        border-radius: 5px;
+                        cursor: pointer;
+
+                        .article-title {
+                            width: 100%;
+                            font-weight: 600;
+                            font-size: 14px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+
+                        .article-date {
+                            font-size: 14px;
+                        }
+
+                        .article-status {
+                            width: fit-content;
+                            padding: 3px 8px;
+                            border-radius: 3px;
+                            font-weight: 600;
+                            margin: 4px 0px;
+                        }
+
+                        .included-article-status {
+                            background-color: rgb(218, 245, 218);
+                            color: rgb(47, 184, 47);
+                        }
+
+                        .excluded-article-status {
+                            background-color: rgb(245, 189, 189);
+                            color: rgb(191, 29, 29);
+                        }
+
+                        .maybe-article-status {
+                            background-color: rgb(234, 213, 173);
+                            color: rgb(172, 123, 31);
+                        }
+                    }
+
+                    .active-sidebar-item-content {
+                        background-color: rgb(215, 234, 250);
+
+                        &:hover {
+                            background-color: rgb(215, 234, 250);
+                        }
+                    }
+
+                    .non-active-sidebar-item-content {
+                        &:hover {
+                            background-color: gainsboro;
+                        }
+                    }
+
+                    .included-article-item {
+                        background-color: rgb(238, 244, 238);
+                        /* 
+                        &:hover {
+                            background-color: rgb(238, 244, 238);
+                        } */
+                    }
+
+                    .excluded-article-item {
+                        background-color: rgb(248, 234, 234);
+                        /* 
+                        &:hover {
+                            background-color: rgb(248, 234, 234);
+                        } */
+                    }
+
+                    .maybe-article-item {
+                        background-color: rgb(251, 245, 234);
+                        /* 
+                        &:hover {
+                            background-color: rgb(251, 245, 234);
+                        } */
+                    }
+
+
+                }
+            }
+        }
+
+        .article-content {
+            width: 64%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .article-content-title {
+                background-color: white;
+                border-radius: 5px;
+                padding: 6px 8px;
+                font-weight: 700;
+            }
+
+            .article-content-body {
+                display: flex;
+                flex-direction: column;
+                background-color: white;
+                border-radius: 5px;
+                padding: 6px 8px;
+                font-size: 16px;
+                overflow-y: auto;
+                flex: 1;
+                scrollbar-width: thin;
+            }
+
+            .footer {
+                .btns-div {
+                    display: flex;
+                    gap: 15px;
+                    bottom: 0;
+
+                    .btn {
+                        padding: 6px 15px;
+                        font-weight: bold;
+                    }
+
+                    #btn-1 {
+                        background-color: rgb(227, 240, 227);
+                        color: rgb(64, 178, 64);
+                    }
+
+                    #btn-2 {
+                        background-color: rgb(238, 222, 192);
+                        color: rgb(165, 122, 42);
+                    }
+
+                    #btn-3 {
+                        background-color: rgb(237, 203, 203);
+                        color: rgb(180, 42, 42);
+                    }
+                }
+            }
+        }
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .Articles {
+        padding: 10px 5px;
+
+        .header {
+            font-size: 12px;
+        }
+
+        .main-body {
+            .articles-sidebar {
+
+                .articles-sidebar-header {
+                    font-size: 12px;
+                }
+
+                .articles-sidebar-content {
+                    .sidebar-item {
+
+                        .sidebar-item-content {
+                            .article-title {
+                                font-size: 12px;
+                            }
+
+                            .article-date {
+                                font-size: 12px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .article-content {
+
+                .article-content-title {
+                    font-size: 12px;
+                }
+
+                .article-content-body {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}

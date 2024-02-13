@@ -7,7 +7,8 @@ const articleSchema = new Schema({
   abstract: String,
   publicationDate: Date,
   documentLink: String,
-  screeningStatus: { type: String, default: 'unreviewed', enum: ['included', 'excluded', 'maybe', 'unreviewed'] },
+  titleScreeningStatus: { type: String, default: 'unreviewed', enum: ['included', 'excluded', 'maybe', 'unreviewed'] },
+  bodyScreeningStatus: { type: String, default: 'unreviewed', enum: ['included', 'excluded', 'maybe', 'unreviewed'] },
   needsThirdPartyReview: { type: Boolean, default: false },
   projectId: {
     type: Schema.Types.ObjectId,
