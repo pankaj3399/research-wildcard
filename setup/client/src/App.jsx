@@ -6,7 +6,8 @@ import Login from './Pages/Login/Login'
 import Dashboard from './Pages/Dashboard/Dashboard'
 import Sidebar from './Components/Sidebar'
 import OneProject from './Pages/Projects/OneProject'
-import TitleAbstract from './Pages/Projects/TitleAbstract'
+import TitleAbstract from './Pages/Projects/TitleAbstract';
+import FullText from './Pages/Projects/FullText';
 import Footer from './Components/Footer'
 import PDFViewer from './Pages/Projects/PDFViewer';
 import Export from './Pages/Export/Export'
@@ -33,7 +34,7 @@ function App() {
           <Route path='/profile' element={<><Sidebar/><ProfilePage /></>} />
           <Route path='/settings' element={<><Sidebar/></>} />
           <Route path='/titleabstract/:projectId' element={<><Sidebar/><TitleAbstract /></>} />
-
+          <Route path='/fulltext/:projectId' element={<><FullText /></>} />
 
 
 

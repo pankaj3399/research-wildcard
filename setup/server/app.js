@@ -15,7 +15,7 @@ const teamRoutes = require('./routes/teamRoutes'); // Adjust the path as necessa
 const userRoleRoutes = require('./routes/userRoleRoutes'); // Adjust the path as necessary
 const roleRoutes = require('./routes/roleRoutes'); // Adjust the path as necessary
 const loginRoutes = require('./routes/loginRoutes'); // Adjust the path as necessary
-
+const articleRoutes = require('./routes/articleRoutes');
 
 //db
 mongoose.connect(process.env.MONG_URI)
@@ -41,6 +41,7 @@ app.use((err, req, res, next) => {
 //routes
 app.use('/project', projectRoutes);
 app.use('/api', projectRoutes);
+app.use('/api', articleRoutes);
 app.use('/api/reviewInstances', reviewInstanceRoutes);
 app.use(express.json());
 app.use('/api/userRoles', userRoleRoutes);

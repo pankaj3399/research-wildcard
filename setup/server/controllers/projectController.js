@@ -48,33 +48,33 @@ exports.importArticles = async (req, res) => {
             const ids = pubmedIds.split(',').map(id => id.trim());
             for (const id of ids) {
                 const studyDetails = await fetchStudyFromPubMed(id);
-if (studyDetails) {
-    const { title, authors, pubdate, abstract } = studyDetails;
-    const newArticle = new Article({
-        title,
-        authors,
-        publicationDate: pubdate,
-        abstract, // Storing the abstract
-        documentType: 'pubmed',
-        projectId: projectId
-    });
-    await newArticle.save();
-    project.studies.push(newArticle._id);
-} else {
-    console.log(`No data found for PubMed ID: ${id}`);
-}
+                if (studyDetails) {
+                    const { title, authors, pubdate, abstract } = studyDetails;
+                    const newArticle = new Article({
+                        title,
+                        authors,
+                        publicationDate: pubdate,
+                        abstract, // Storing the abstract
+                        documentType: 'pubmed',
+                        projectId: projectId
+                    });
+                    await newArticle.save();
+                    project.studies.push(newArticle._id);
+                } else {
+                    console.log(`No data found for PubMed ID: ${id}`);
+                }
             }
         }
 
         // Process file uploads
         if (files && files.length > 0) {
             for (const file of files) {
-                
+
                 const newArticle = new Article({
                     title: file.originalname, // Placeholder, adjust as needed
                     documentLink: file.path,
                     documentType: 'pdf',
-                    projectId: projectId 
+                    projectId: projectId
                 });
                 await newArticle.save();
                 project.studies.push(newArticle._id);
@@ -95,7 +95,6 @@ if (studyDetails) {
 // Update an article's review status within a project
 exports.updateArticleReviewStatus = async (req, res) => {
     const { articleId, reviewStatus, projectId } = req.body;
-
     try {
         // Find the review instance for this article within the project
         const reviewInstance = await ReviewInstance.findOne({ article: articleId, project: projectId });
@@ -209,11 +208,10 @@ exports.deleteProject = async (req, res) => {
 //fetch all studies for a project
 exports.getStudies = async (req, res) => {
     const { projectId } = req.params;
-
     try {
         const project = await
-        Project.findById(projectId)
-        .populate('studies');
+            Project.findById(projectId)
+                .populate('studies');
         if (!project) {
             return res.status(404).json({ message: "Project not found" });
         }
@@ -238,7 +236,7 @@ exports.getProjectById = async (req, res) => {
 
     try {
         const project = await
-        Project.findById(projectId);
+            Project.findById(projectId);
         if (!project) {
             return res.status(404).json({ message: "Project not found" });
         }
