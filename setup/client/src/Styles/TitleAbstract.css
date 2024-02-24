@@ -21,6 +21,23 @@
         height: 88%;
         gap: 1%;
 
+        .review-list {
+            background-color: white;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .review-title {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .review-list-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
         .articles-sidebar {
             width: 35%;
             background-color: white;
